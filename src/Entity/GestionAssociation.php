@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\GestionAssociationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Query\Expr\Func;
 
 /**
  * @ORM\Entity(repositoryClass=GestionAssociationRepository::class)
@@ -58,6 +59,11 @@ class GestionAssociation
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $grande_rubrique;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $date_signature;
 
     public function getId(): ?int
     {
@@ -158,5 +164,22 @@ class GestionAssociation
         $this->grande_rubrique = $grande_rubrique;
 
         return $this;
+    }
+
+    public function getDateSignature(): ?\DateTimeInterface
+    {
+        return $this->date_signature;
+    }
+
+    public function setDateSignature(\DateTimeInterface $date_signature): self
+    {
+        $this->date_signature = $date_signature;
+
+        return $this;
+    }
+
+    public function __tostring(): string
+    {
+        return $this->denomination;
     }
 }

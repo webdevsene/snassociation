@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GestionAssociation{% endblock %}
+
+{% block body %}
+    <h1>GestionAssociation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ gestion_association.id }}</td>
+            </tr>
+            <tr>
+                <th>Numero_recipice</th>
+                <td>{{ gestion_association.numeroRecipice }}</td>
+            </tr>
+            <tr>
+                <th>Denomination</th>
+                <td>{{ gestion_association.denomination }}</td>
+            </tr>
+            <tr>
+                <th>Adresse_siege</th>
+                <td>{{ gestion_association.adresseSiege }}</td>
+            </tr>
+            <tr>
+                <th>Geolocalisation</th>
+                <td>{{ gestion_association.geolocalisation }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ gestion_association.type }}</td>
+            </tr>
+            <tr>
+                <th>Grande_rubrique</th>
+                <td>{{ gestion_association.grandeRubrique }}</td>
+            </tr>
+            <tr>
+                <th>Date_signature</th>
+                <td>{{ gestion_association.dateSignature ? gestion_association.dateSignature|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('gestion_association_index') }}">back to list</a>
+
+    <a href="{{ path('gestion_association_edit', {'id': gestion_association.id}) }}">edit</a>
+
+    {{ include('gestion_association/_delete_form.html.twig') }}
+{% endblock %}

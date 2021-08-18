@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GestionAssociation index{% endblock %}
+
+{% block body %}
+    <h1>Gestion Association </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero_recipice</th>
+                <th>Denomination</th>
+                <th>Adresse_siege</th>
+                <th>Geolocalisation</th>
+                <th>Type</th>
+                <th>Grande_rubrique</th>
+                <th>Date_signature</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gestion_association in gestion_associations %}
+            <tr>
+                <td>{{ gestion_association.id }}</td>
+                <td>{{ gestion_association.numeroRecipice }}</td>
+                <td>{{ gestion_association.denomination }}</td>
+                <td>{{ gestion_association.adresseSiege }}</td>
+                <td>{{ gestion_association.geolocalisation }}</td>
+                <td>{{ gestion_association.type }}</td>
+                <td>{{ gestion_association.grandeRubrique }}</td>
+                <td>{{ gestion_association.dateSignature ? gestion_association.dateSignature|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('gestion_association_show', {'id': gestion_association.id}) }}">show</a>
+                    <a href="{{ path('gestion_association_edit', {'id': gestion_association.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('gestion_association_new') }}">Create new</a>
+{% endblock %}
