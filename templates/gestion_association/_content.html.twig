@@ -1,0 +1,47 @@
+{# {% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"></script>
+{% endblock %} #}
+
+    <div class="container">
+        <div class="row" data-masonry='{"percentPosition": true }'>
+            {% for gestion_association in gestion_associations %}
+                    <div class="col-md-3">
+                        <div class="card my-2 bg-light">
+                            <div class="col form-group d-flex">
+                                <span class="badge badge-primary bg-success" style="margin-right: 5rem;">Récipissé N° : {{ gestion_association.numeroRecipice }}</span>
+                                <span class="input-group-addon text-small text-muted">du {{ gestion_association.dateSignature ? gestion_association.dateSignature|date('Y-m-d') : '' }}</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ gestion_association.denomination|u.truncate(25, "...", true) }}</h5>
+                                <p class="card-text">on y revient</p>
+                                <div class="row">
+                                    <div class="col-xs-1-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Région : </span>
+                                            <span class="input-group-addon" style="margin-left: 50px;">Département : </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="col inline-group d-flex">
+                                    {#<a class="btn btn-outline-primary" href="{{ path('gestion_association_show', {'id': gestion_association.id}) }}" style="margin-right: 2rem;">Détails...</a>#}
+                                    <a class="btn btn-outline-primary" href="{{ path('gestion_association_show', {'slug': gestion_association.slug, 'id': gestion_association.id}) }}" style="margin-right: 2rem;">Détails...</a>
+                                    <button class="btn">
+                                             <span class="badge badge-primary bg-info"> {{ gestion_association.adresseSiege|u.truncate(20, '...', true) }} </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            {% else %}
+                {# <div class="row">
+                    <div class="col-md-12">
+                        no records found
+                    </div>
+                </div> #}
+                <div class="alert alert-warning" role="alert">
+                    <strong>no record found</strong>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
