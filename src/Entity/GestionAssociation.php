@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\GestionAssociationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Query\Expr\Func;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * @ORM\Entity(repositoryClass=GestionAssociationRepository::class)
@@ -45,25 +47,54 @@ class GestionAssociation
      */
     private $adresse_siege;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $geolocalisation;
+    ///**
+    // * @ORM\Column(type="string", length=255, nullable=true)
+    // */
+    //private $geolocalisation;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var array
+     * @ORM\Column(type="json")
      */
-    private $type;
+    private $geolocalisation = [];
+
+    ///**
+    // * ORM\Column(type="string", length=255, nullable=true)
+    // * private $type;
+    // */
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var array
+     * @ORM\Column(type="json")
      */
-    private $grande_rubrique;
+    private $grande_rubrique = [];
+
+    ///**
+    // * @ORM\Column(type="string", length=255, nullable=true)
+    // */
+    //private $grande_rubrique;
 
     /**
      * @ORM\Column(type="date")
      */
     private $date_signature;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=TypeAssociation::class, inversedBy="associations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $types;
+
+    /**
+     * @Gedmo\Slug(fields={"denomination"})
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $createdAt;
 
     public function getId(): ?int
     {
@@ -130,41 +161,41 @@ class GestionAssociation
         return $this;
     }
 
-    public function getGeolocalisation(): ?string
-    {
-        return $this->geolocalisation;
-    }
+    // public function getGeolocalisation(): ?string
+    // {
+    //     return $this->geolocalisation;
+    // }
 
-    public function setGeolocalisation(?string $geolocalisation): self
+    /* public function setGeolocalisation(?string $geolocalisation): self
     {
         $this->geolocalisation = $geolocalisation;
 
         return $this;
-    }
+    } */
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
+    // public function getType(): ?string
+    // {
+    //     return $this->type;
+    // }
 
-    public function setType(?string $type): self
-    {
-        $this->type = $type;
+    // public function setType(?string $type): self
+    // {
+    //     $this->type = $type;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getGrandeRubrique(): ?string
-    {
-        return $this->grande_rubrique;
-    }
+    // public function getGrandeRubrique(): ?string
+    // {
+    //     return $this->grande_rubrique;
+    // }
 
-    public function setGrandeRubrique(?string $grande_rubrique): self
-    {
-        $this->grande_rubrique = $grande_rubrique;
+    // public function setGrandeRubrique(?string $grande_rubrique): self
+    // {
+    //     $this->grande_rubrique = $grande_rubrique;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getDateSignature(): ?\DateTimeInterface
     {
@@ -181,5 +212,96 @@ class GestionAssociation
     public function __tostring(): string
     {
         return $this->denomination;
+    }
+
+    public function getTypes(): ?TypeAssociation
+    {
+        return $this->types;
+    }
+
+    public function setTypes(?TypeAssociation $types): self
+    {
+        $this->types = $types;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of geolocalisation
+     *
+     * @return  array
+     */
+    public function getGeolocalisation(): array
+    {
+        //$geolocalisation = $this->geolocalisation ;
+
+        //if (empty($geolocalisation)) {
+        //    $geolocalisation[] = 'National';
+        //}
+        return $this->geolocalisation;
+        //return array_unique($geolocalisation);
+    }
+
+    /**
+     * Set the value of geolocalisation
+     *
+     * @param  array  $geolocalisation
+     *
+     * @return  self
+     */
+    public function setGeolocalisation(array $geolocalisation)
+    {
+        $this->geolocalisation = $geolocalisation;
+
+        return $this;
+    }
+
+
+    /**
+     * Get the value of grande_rubrique
+     *
+     * @return  array
+     */
+    public function getGrandeRubrique(): array
+    {
+        return $this->grande_rubrique;
+    }
+
+    /**
+     * Set the value of grande_rubrique
+     *
+     * @param  array  $grande_rubrique
+     *
+     * @return  self
+     */
+    public function setGrandeRubrique(array $grande_rubrique)
+    {
+        $this->grande_rubrique = $grande_rubrique;
+
+        return $this;
     }
 }

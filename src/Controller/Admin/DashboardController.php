@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Departement;
 use App\Entity\GestionAssociation;
 use App\Entity\RegionSenegal;
+use App\Entity\TypeAssociation;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -34,10 +35,11 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Gestion des régions', 'fas fa-city', RegionSenegal::class),
             MenuItem::linkToCrud('Gestion des départements', 'fas fa-city', Departement::class),
             MenuItem::linkToCrud('Gestion associations', 'fas fa-city', GestionAssociation::class),
+            MenuItem::linkToCrud('Type', 'fas fa-list', TypeAssociation::class),
 
 
             MenuItem::section('Paramètrage'),
-            MenuItem::linkToCrud('Utilisateurs', 'fa fa-user', User::class)->setPermission('ROLE_ADMIN'),
+            //MenuItem::linkToCrud('Utilisateurs', 'fa fa-user', User::class)->setPermission('ROLE_ADMIN'),
 
         ];
     }

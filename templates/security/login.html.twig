@@ -1,9 +1,12 @@
 {# {% extends 'base.html.twig' %} #}
-
-{% block stylesheets %}
+<head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="../bootstrap/css/_login_page_src.css" />
+
+</head>
+
+{% block stylesheets %}
 {% endblock %}
 
 {% block body %}
@@ -19,12 +22,17 @@
 
     {% if app.user %}
         <div class="alert alert-info">
-            Bienvenu e {{ app.user.username }}, <a class="btn btn-outline-secondary" href="{{ path('app_logout') }}">Logout</a>
+            Bienvenu e {{ app.user.username }}, <a class="btn btn-outline-secondary" href="{{ path('app_logout') }}"> Logout</a>
         </div>
     {% endif %}
-    <div class="container">
+    <div class="container d-flex">
+        <div class="col-lg-3 mr-4">
+        <img src="../bootstrap/img/logo-GouvSn.png" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
+        </div>
+        <div class="col-lg-6">
         <h6 class="display-8">MINISTÉRE DE L'INTÉRIEUR</h6>
         <p class="lead">Direction Générale de l'Administration Territoriale</p>
+        </div>
         <hr class="my-2">
     </div>
     <div class="card card0 border-0">

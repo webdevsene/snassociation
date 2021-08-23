@@ -1,4 +1,4 @@
-index:
+app_login :
     path: /
     controller: App\Controller\SecurityController::login
 # homepage:

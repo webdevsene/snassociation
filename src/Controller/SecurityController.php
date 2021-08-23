@@ -2,22 +2,29 @@
 
 namespace App\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security as CoreSecurity;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/login", name="app_login")
+     * @Route("/", name="app_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, CoreSecurity $security): Response
     {
         // quand on est connectén on est redirigé vers lal iste des associations
-         if ($this->getUser()) {
-             return $this->redirectToRoute('gestion_association_index');
-         }
+         //if ($this->getUser()) {
+         //    return $this->redirectToRoute('gestion_association_index');
+         //}
+
+         // if user is already logged in, don't display the login page again
+        if ($security->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('gestion_association_index');
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
