@@ -12,22 +12,17 @@
     <div class="main-content" style="margin-bottom: 6rem;">
     </div>
 <div class="main-content">
-    <div class="container mt-4">
-                <form action="#" method="get">
-                    <div class="form-group">
-                        <input name="q"
-                               class="form-control search-field"
-                               placeholder="Such..."
-                               autocomplete="off"
-                               value=""
-                               autofocus
-                               data-no-results-message=""
-                        >
-                    </div>
-                </form>
-                <h1 class="mt-4">Liste des Associations  </h1>
-
-                {% include "/gestion_association/_content.html.twig" %}
+    <div class="container mt-4"> 
+        <div class="row justify-content-start">
+        <div class="col-sm-6 form-group d-flex">
+            {# {{ form_start(form) }}
+                {{ form_widget(form) }}
+            {{ form_end(form) }} 
+             #}{{form(form)}}
+        </div>
+        </div>
+        <h1 class="mt-4">Liste des Associations  </h1
+        {% include "/gestion_association/_content.html.twig" %}
 
     </div>
 </div>

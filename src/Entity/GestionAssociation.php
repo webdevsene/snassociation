@@ -6,10 +6,14 @@ use App\Repository\GestionAssociationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Query\Expr\Func;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 /**
  * @ORM\Entity(repositoryClass=GestionAssociationRepository::class)
+ * @ORM\Table(name="gestion_association", indexes={@ORM\Index(columns={"denomination", "numero_recipice", "adresse_siege"}, flags={"fulltext"})})
+ * @Vich\Uploadable
  */
 class GestionAssociation
 {
@@ -96,6 +100,47 @@ class GestionAssociation
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @var string
+     */
+    private $recipisses;
+
+    /**
+     * @Vich\UploadableField(mapping="recipisses_path", fileNameProperty="recipisses")
+     * @var File
+     */
+    private $recipissesFile;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    public function setRecipissesFile(?File $recipissesFile = null): void
+    {
+        $this->$recipissesFile = $recipissesFile;
+        if ($recipissesFile) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getRecipissesFile( ): ?File
+    {
+        return $this->recipissesFile;
+    }
+
+    public function setRecipisses(?string $recipisses): void
+    {
+        $this->recipisses = $recipisses;
+    }
+
+    public function getRecipisses(): ?string
+    {
+        return $this->recipisses;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -160,42 +205,6 @@ class GestionAssociation
 
         return $this;
     }
-
-    // public function getGeolocalisation(): ?string
-    // {
-    //     return $this->geolocalisation;
-    // }
-
-    /* public function setGeolocalisation(?string $geolocalisation): self
-    {
-        $this->geolocalisation = $geolocalisation;
-
-        return $this;
-    } */
-
-    // public function getType(): ?string
-    // {
-    //     return $this->type;
-    // }
-
-    // public function setType(?string $type): self
-    // {
-    //     $this->type = $type;
-
-    //     return $this;
-    // }
-
-    // public function getGrandeRubrique(): ?string
-    // {
-    //     return $this->grande_rubrique;
-    // }
-
-    // public function setGrandeRubrique(?string $grande_rubrique): self
-    // {
-    //     $this->grande_rubrique = $grande_rubrique;
-
-    //     return $this;
-    // }
 
     public function getDateSignature(): ?\DateTimeInterface
     {
@@ -301,6 +310,30 @@ class GestionAssociation
     public function setGrandeRubrique(array $grande_rubrique)
     {
         $this->grande_rubrique = $grande_rubrique;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of updatedAt
+     *
+     * @return  \DateTime
+     */ 
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set the value of updatedAt
+     *
+     * @param  \DateTime  $updatedAt
+     *
+     * @return  self
+     */ 
+    public function setUpdatedAt(\DateTime $updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

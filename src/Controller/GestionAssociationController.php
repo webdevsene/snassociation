@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
+use App\Form\SearchAssocFormType;
 use App\Entity\GestionAssociation;
 use App\Form\GestionAssociationType;
-use App\Repository\GestionAssociationRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\GestionAssociationRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/gestion/association")
@@ -16,12 +17,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class GestionAssociationController extends AbstractController
 {
     /**
-     * @Route("/", name="gestion_association_index", methods={"GET"})
+     * @Route("/", name="gestion_association_index", methods={"POST", "GET"})
      */
-    public function index(GestionAssociationRepository $gestionAssociationRepository): Response
+    public function index(GestionAssociationRepository $gestionAssociationRepository, Request $request): Response
     {
+        $gestion_association = $gestionAssociationRepository->findAll();
+        // creer le formulaire de recherche full text
+        $form = $this->createForm(SearchAssocFormType::class);
+        $search = $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $gestion_association = $gestionAssociationRepository->search(
+                $search->get('mots')->getData(),
+                $search->get('types')->getData());
+        }
+
         return $this->render('gestion_association/index.html.twig', [
-            'gestion_associations' => $gestionAssociationRepository->findAll(),
+            'gestion_associations' => $gestion_association,
+            'form' => $form->createview()
         ]);
     }
 

@@ -19,6 +19,25 @@ class GestionAssociationRepository extends ServiceEntityRepository
         parent::__construct($registry, GestionAssociation::class);
     }
 
+    public function search($mots = null, $type = null)
+    {
+        #$query = $this->createQueryBuilder('g');
+        $query = null ;
+        if ($mots != null ) {
+            $query = $this->createQueryBuilder('g')
+                          ->andWhere('MATCH_AGAINST(g.denomination, g.numero_recipice, g.adresse_siege) AGAINST(:mots boolean)>0')
+                          ->setParameter('mots', $mots);
+        }
+        // cette partie recherche par jointure sur le type de l'assaociation
+        if($type != null){
+            $query->leftJoin('g.types', 't')
+                ->andWhere('t.id = :id')
+                ->setParameter('id', $type);
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
     // /**
     //  * @return GestionAssociation[] Returns an array of GestionAssociation objects
     //  */
