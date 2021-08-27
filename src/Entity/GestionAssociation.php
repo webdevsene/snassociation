@@ -13,7 +13,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity(repositoryClass=GestionAssociationRepository::class)
  * @ORM\Table(name="gestion_association", indexes={@ORM\Index(columns={"denomination", "numero_recipice", "adresse_siege"}, flags={"fulltext"})})
- * @Vich\Uploadable
+ * @Vich\Uploadable()
  */
 class GestionAssociation
 {
@@ -101,13 +101,13 @@ class GestionAssociation
     private $createdAt;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=200, nullable=true)
      * @var string
      */
     private $recipisses;
 
     /**
-     * @Vich\UploadableField(mapping="recipisses_path", fileNameProperty="recipisses")
+     * @Vich\UploadableField(mapping="recipisses_load", fileNameProperty="recipisses")
      * @var File
      */
     private $recipissesFile;
@@ -118,22 +118,31 @@ class GestionAssociation
      */
     private $updatedAt;
 
-    public function setRecipissesFile(?File $recipissesFile = null): void
+    
+    /**
+     * @param mixed $recipissesFile
+     * @throws \Exception
+     */
+    public function setRecipissesFile(File $recipissesFile = null): void
     {
         $this->$recipissesFile = $recipissesFile;
-        if ($recipissesFile) {
+        if ($recipissesFile instanceof File) {
             $this->updatedAt = new \DateTime('now');
         }
     }
 
-    public function getRecipissesFile( ): ?File
+     /**
+     * @return mixed
+     */
+    public function getRecipissesFile( )
     {
         return $this->recipissesFile;
     }
 
-    public function setRecipisses(?string $recipisses): void
+    public function setRecipisses(?string $recipisses): self
     {
         $this->recipisses = $recipisses;
+        return $this;
     }
 
     public function getRecipisses(): ?string

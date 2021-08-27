@@ -6,13 +6,13 @@ easy_admin:
             - '@EasyAdmin/form/bootstrap_4.html.twig'
             - '@VichUploader/Form/fields.html.twig'
 
-    # entities:
-    #     GestionAssociation:
-    #         class: App\Entity\GestionAssociation
-    #         list:
-    #             fields:
-    #                 - 'recipisses'
-    #                 - { property: 'recipisses', template: 'recipisses.html.twig', base_path: '%uploads_recipisses%' }
-    #         form:
-    #             fields:
-    #                 - { property: 'recipissesFile', type: 'vich_file' }
+    entities:
+        GestionAssociation:
+            class: App\Entity\GestionAssociation
+            list:
+                fields:
+                    - recipisses
+                    - { property: 'recipisses', template: 'recipisses.html.twig', base_path: '%app.path.uploads_recipisses%' }
+            form:
+                fields:
+                    - { property: 'recipissesFile', type: 'vich_file' }
