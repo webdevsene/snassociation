@@ -1,13 +1,12 @@
 vich_uploader:
     db_driver: orm
-    #storage: flysystem
+    storage: flysystem
 
     mappings:
-        recipisses_load:
-            # uri_prefix: tousrecipisses
-            uri_prefix: '%app.path.uploads_recipisses%'
-            # upload_destination: '%kernel.project_dir%/public/tousrecipisses'
-            upload_destination: '%kernel.project_dir%/public%app.path.uploads_recipisses%' # Use the name you defined for your storage here '%kernel.project_dir%/public/tousrecipisses'
-            namer:
-                service: Vich\UploaderBundle\Naming\PropertyNamer
-                options: { property: 'slug' } # supposing that the object contains a "slug" attribute or a "getSlug" method
+        docs_thumbnails:
+            uri_prefix: '%uploads_path%'
+            # upload_destination: '%kernel.project_dir%/public/%uploads_path%'
+            upload_destination: default.storage
+            # namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            # delete_on_update: false
+            # delete_on_remove: true

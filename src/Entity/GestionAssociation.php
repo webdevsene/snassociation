@@ -100,18 +100,19 @@ class GestionAssociation
      */
     private $createdAt;
 
+    
+    /**
+     * @Vich\UploadableField(mapping="docs_thumbnails", fileNameProperty="recipisses")
+     * @var File
+     */
+    private $recipissesFile;
+    
     /**
      * @ORM\Column(type="string", length=200, nullable=true)
      * @var string
      */
     private $recipisses;
-
-    /**
-     * @Vich\UploadableField(mapping="recipisses_load", fileNameProperty="recipisses")
-     * @var File
-     */
-    private $recipissesFile;
-
+    
     /**
      * @ORM\Column(type="datetime")
      * @var \DateTime

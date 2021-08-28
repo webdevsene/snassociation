@@ -7,23 +7,28 @@
 {% endblock %}
 
 {% block body %}
-    {% include "/menu.html.twig" %}
 
-    <div class="main-content" style="margin-bottom: 6rem;">
-    </div>
-<div class="main-content">
-    <div class="container mt-4"> 
-        <div class="row justify-content-start">
-        <div class="col-sm-6 form-group d-flex">
-            {# {{ form_start(form) }}
-                {{ form_widget(form) }}
-            {{ form_end(form) }} 
-             #}{{form(form)}}
-        </div>
-        </div>
+    {% include "/menu.html.twig" %}
+    <div class="container" style="margin-top: 142px;">
+           {#  <div class="form-inline">
+                {{form(form)}}
+            </div> #}
+            {{ form_start(form, {'method': 'post', 'action': path('gestion_association_index') }) }}
+                <div class="row">
+                    <div class="col-lg-4">
+                      {{ form_widget(form.mots)}}
+                      {{ form_errors(form.mots)}}
+                    </div>
+                    <div class="col-lg-4">
+                      {{ form_widget(form.types)}}
+                    </div>
+                    <div class="col-lg-4">
+                      {{ form_widget(form.Rechercher)}}
+                    </div>
+                </div>
+            {{ form_end(form) }}
         <h1 class="mt-4">Liste des Associations  </h1
         {% include "/gestion_association/_content.html.twig" %}
 
     </div>
-</div>
 {% endblock %}

@@ -22,14 +22,15 @@ class SearchAssocFormType extends AbstractType
                     'placeholder' => 'Entrer un ou plusieurs mot s'
                 ],
                 'required' => true,
-            ])
-            ->add('types', EntityType::class, [
-                'class' => TypeAssociation::class,
-                'label' => false,
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-                'required' => false,
+                ])
+                ->add('types', EntityType::class, [
+                    'class' => TypeAssociation::class,
+                    'label' => false,
+                    'attr' => [
+                        'class' => 'form-control',
+                    ],
+                    'required' => false,
+                    'placeholder' => 'Entrer un ou plusieurs mot s'
             ])
             ->add('Rechercher', SubmitType::class, [
                 'attr' => [

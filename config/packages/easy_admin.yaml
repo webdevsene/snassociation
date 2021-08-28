@@ -12,7 +12,7 @@ easy_admin:
             list:
                 fields:
                     - recipisses
-                    - { property: 'recipisses', template: 'recipisses.html.twig', base_path: '%app.path.uploads_recipisses%' }
+                    - { property: 'recipisses', template: 'recipisses.html.twig', base_path: '%uploads_path%' }
             form:
                 fields:
                     - { property: 'recipissesFile', type: 'vich_file' }

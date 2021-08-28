@@ -4,5 +4,5 @@ flysystem:
         default.storage:
             adapter: 'local'
             options:
-                directory: '%kernel.project_dir%/public%app.path.uploads_recipisses%'
+                directory: '%kernel.project_dir%/public/%uploads_path%'
                 # directory: '%kernel.project_dir%/public%app.path.uploads_recipisses%'

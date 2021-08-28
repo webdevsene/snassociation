@@ -37,19 +37,22 @@ class GestionAssociationCrudController extends AbstractCrudController
     {
         return [
             TextField::new('numero_recipice'),
-            Field::new('recipissesFile', 'Téléverser le récipissé (PDF)')
+            TextareaField::new('recipissesFile', 'Téléverser le récipissé (PDF)')
                     ->setFormType(VichFileType::class, [
                         'delete_label' => 'supprimer?',
                         'allow_file_upload' => true
                     ])
                     ->onlyWhenCreating(),
-            TextField::new('recipisses', 'Récipissé')
+            SlugField::new('recipisses')->setLabel('Récipissé')
+                    ->setTargetFieldName('recipissesFile')
                     ->setTemplatePath('recipisses.html.twig')
-                     ->setCustomOption('base_path', $this->params->get('app.path.uploads_recipisses'))
+                     ->setCustomOption('base_path', $this->params->get('uploads_path'))
                      ->hideOnForm(),
             // ImageField::new('recipisses')
-            //         ->setBasePath('/tousrecipisses')
-            //         ->onlyOnDetail(),
+            //         ->setFormType(VichFileType::class)
+            //         ->setBasePath('/uploads/tousrecipisses')
+            //         ->setUploadDir('/uploads/tousrecipisses')
+            //         ->hideOnForm(),
             TextField::new('denomination'),
 
             // information de localisation section

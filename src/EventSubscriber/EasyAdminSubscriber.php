@@ -33,6 +33,9 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             return;
         }
 
+        // on doit pouvoir recuperer le nom du fichier ici
+        
+
 
        /*  $slug = $this->slugger->slugify($entity->getDenomination());
         $entity->setSlug($slug); */
