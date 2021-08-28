@@ -1,7 +1,7 @@
 {#How to fix for easyadmin3:
 #thumbnail.html.twig#}
-<a href="{{ field.customOption('base_path') ~ '/' ~ entity.instance.recipisses}}">
+<a href="{{ field.customOption('base_path') ~ '/' ~ entity.instance.filename}}">
     <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-    View recipisse (PDF)
+    {{ entity.instance.filename|u.truncate(30, '...', true) }}
 </a>
 {# <a href="{{ asset('entity.instance.recipisses', 'recipisses_load') }}"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> View contract (PDF)</a> #}

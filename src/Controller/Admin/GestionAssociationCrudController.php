@@ -5,13 +5,10 @@ namespace App\Controller\Admin;
 use App\Entity\GestionAssociation;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -35,25 +32,21 @@ class GestionAssociationCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+        $filename = TextareaField::new('filename', 'Recipisse')
+                            ->setTemplatePath('associationhead/recipisses.html.twig')
+                            ->setCustomOption('base_path', $this->params->get('app.path.uploads_files'))
+                            ->hideOnForm();
+
         return [
             TextField::new('numero_recipice'),
-            TextareaField::new('recipissesFile', 'Téléverser le récipissé (PDF)')
-                    ->setFormType(VichFileType::class, [
-                        'delete_label' => 'supprimer?',
-                        'allow_file_upload' => true
-                    ])
-                    ->onlyWhenCreating(),
-            SlugField::new('recipisses')->setLabel('Récipissé')
-                    ->setTargetFieldName('recipissesFile')
-                    ->setTemplatePath('recipisses.html.twig')
-                     ->setCustomOption('base_path', $this->params->get('uploads_path'))
-                     ->hideOnForm(),
-            // ImageField::new('recipisses')
-            //         ->setFormType(VichFileType::class)
-            //         ->setBasePath('/uploads/tousrecipisses')
-            //         ->setUploadDir('/uploads/tousrecipisses')
-            //         ->hideOnForm(),
             TextField::new('denomination'),
+            TextareaField::new('file')
+                        ->setFormType(VichFileType::class, [
+                            'delete_label' => 'supprimer?'
+                        ])
+                        ->setLabel('Charger un récipissé')
+                        ->onlyOnForms(),
+            $filename,
 
             // information de localisation section
             TextField::new('adresse_siege')->hideOnIndex(),

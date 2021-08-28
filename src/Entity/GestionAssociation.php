@@ -2,18 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\GestionAssociationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Query\Expr\Func;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\HttpFoundation\File\File;
+use App\Repository\GestionAssociationRepository;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 /**
  * @ORM\Entity(repositoryClass=GestionAssociationRepository::class)
+ * @Vich\Uploadable
  * @ORM\Table(name="gestion_association", indexes={@ORM\Index(columns={"denomination", "numero_recipice", "adresse_siege"}, flags={"fulltext"})})
- * @Vich\Uploadable()
  */
 class GestionAssociation
 {
@@ -100,55 +101,45 @@ class GestionAssociation
      */
     private $createdAt;
 
-    
     /**
-     * @Vich\UploadableField(mapping="docs_thumbnails", fileNameProperty="recipisses")
-     * @var File
+     * @ORM\Column(type="string", length=255)
      */
-    private $recipissesFile;
-    
+    private $filename;
+
     /**
-     * @ORM\Column(type="string", length=200, nullable=true)
-     * @var string
-     */
-    private $recipisses;
-    
+    * NOTE: This is not a mapped field of entity metadata, just a simple property.
+    *
+    * @Vich\UploadableField(mapping="uploads_files", fileNameProperty="filename")
+    *
+    * @var File|null
+    */
+    private $file;
+
     /**
      * @ORM\Column(type="datetime")
-     * @var \DateTime
+     *
+     * @var \DateTimeInterface|null
      */
     private $updatedAt;
 
-    
     /**
-     * @param mixed $recipissesFile
-     * @throws \Exception
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $file
      */
-    public function setRecipissesFile(File $recipissesFile = null): void
+    public function setFile(?File $file = null): void
     {
-        $this->$recipissesFile = $recipissesFile;
-        if ($recipissesFile instanceof File) {
-            $this->updatedAt = new \DateTime('now');
+        $this->file = $file;
+
+        if (null !== $file) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
         }
     }
 
-     /**
-     * @return mixed
-     */
-    public function getRecipissesFile( )
+    public function getFile(): ?File
     {
-        return $this->recipissesFile;
-    }
-
-    public function setRecipisses(?string $recipisses): self
-    {
-        $this->recipisses = $recipisses;
-        return $this;
-    }
-
-    public function getRecipisses(): ?string
-    {
-        return $this->recipisses;
+        return $this->file;
     }
 
     public function getId(): ?int
@@ -299,7 +290,6 @@ class GestionAssociation
         return $this;
     }
 
-
     /**
      * Get the value of grande_rubrique
      *
@@ -324,26 +314,14 @@ class GestionAssociation
         return $this;
     }
 
-    /**
-     * Get the value of updatedAt
-     *
-     * @return  \DateTime
-     */ 
-    public function getUpdatedAt()
+    public function getFilename(): ?string
     {
-        return $this->updatedAt;
+        return $this->filename;
     }
 
-    /**
-     * Set the value of updatedAt
-     *
-     * @param  \DateTime  $updatedAt
-     *
-     * @return  self
-     */ 
-    public function setUpdatedAt(\DateTime $updatedAt)
+    public function setFilename(string $filename): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->filename = $filename;
 
         return $this;
     }
