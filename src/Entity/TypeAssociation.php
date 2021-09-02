@@ -134,6 +134,6 @@ class TypeAssociation
 
     public function __toString(): string
     {
-        return $this->description . '#' ;
+        return $this->description ;
     }
 }

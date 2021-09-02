@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Departement;
-use App\Entity\GestionAssociation;
+use App\Entity\GestionAssociation as Association;
 use App\Entity\RegionSenegal;
 use App\Entity\TypeAssociation;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -25,21 +25,34 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Snassociation');
+            ->setTitle('Portail Gouvernance');
     }
 
     public function configureMenuItems(): iterable
     {
         return [
+            MenuItem::section(''),
             MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home'),
-            MenuItem::linkToCrud('Gestion des régions', 'fas fa-city', RegionSenegal::class),
-            MenuItem::linkToCrud('Gestion des départements', 'fas fa-city', Departement::class),
-            MenuItem::linkToCrud('Gestion associations', 'fas fa-city', GestionAssociation::class),
-            MenuItem::linkToCrud('Type', 'fas fa-list', TypeAssociation::class),
+
+            MenuItem::section('Gestion des entités'),
+            MenuItem::subMenu('Gestion des entités')
+                    ->setSubItems([
+                        MenuItem::linkToCrud('Gestion associations', 'fas fa-list', Association::class),
+                    ]),
+
+            MenuItem::section('Tables de référence'),
+            MenuItem::subMenu('Tables de référence', 'fa fa-list-alt')
+            ->setCssClass('')
+            ->setSubItems([
+
+                MenuItem::linkToCrud('Gestion des Régions', 'fas fa-city', RegionSenegal::class),
+                MenuItem::linkToCrud('Gestion des Départements', 'fas fa-map', Departement::class),
+                MenuItem::linkToCrud('Type', 'fas fa-list', TypeAssociation::class),
+
+            ]),
 
 
-            MenuItem::section('Paramètrage'),
-            //MenuItem::linkToCrud('Utilisateurs', 'fa fa-user', User::class)->setPermission('ROLE_ADMIN'),
+
 
         ];
     }

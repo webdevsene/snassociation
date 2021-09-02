@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\SearchAssocFormType;
 use App\Entity\GestionAssociation;
 use App\Form\GestionAssociationType;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,17 +20,29 @@ class GestionAssociationController extends AbstractController
     /**
      * @Route("/", name="gestion_association_index", methods={"POST", "GET"})
      */
-    public function index(GestionAssociationRepository $gestionAssociationRepository, Request $request): Response
+    public function index(GestionAssociationRepository $gestionAssociationRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $gestion_association = $gestionAssociationRepository->findAll();
+        $donnees = $gestionAssociationRepository->findBy([], ['createdAt' => 'desc']);
+
+        // $gestion_association = $gestionAssociationRepository->findAll();
+
         // creer le formulaire de recherche full text
         $form = $this->createForm(SearchAssocFormType::class);
+
         $search = $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $gestion_association = $gestionAssociationRepository->search(
+            $donnees = $gestionAssociationRepository->search(
                 $search->get('mots')->getData(),
                 $search->get('types')->getData());
         }
+
+        // mettre en place la pagination
+        $gestion_association = $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page', 1),
+            8
+        );
 
         return $this->render('gestion_association/index.html.twig', [
             'gestion_associations' => $gestion_association,

@@ -9,16 +9,16 @@
                         <div class="card my-2 bg-light">
                             <div class="col form-group d-flex">
                                 <span class="badge badge-primary bg-success" style="margin-right: 5rem;">Récipissé N° : {{ gestion_association.numeroRecipice }}</span>
-                                <span class="input-group-addon text-small text-muted">du {{ gestion_association.dateSignature ? gestion_association.dateSignature|date('Y-m-d') : '' }}</span>
+                                <span class="input-group-addon text-small text-muted">{{ gestion_association.dateSignature ? gestion_association.dateSignature|date('Y-m-d') : '' }}</span>
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">{{ gestion_association.denomination|u.truncate(25, "...", true) }}</h5>
-                                <p class="card-text">on y revient</p>
+                                <p class="card-text">onit365</p>
                                 <div class="row">
                                     <div class="col-xs-1-12">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">Région : </span>
-                                            <span class="input-group-addon" style="margin-left: 50px;">Département : </span>
+                                        <div class="input-group bg-secondary">
+                                            <span class="input-group-addon">Région : {{ gestion_association.regions }}</span>
+                                            <span class="input-group-addon" style="margin-left: 50px;">Dept : {{ gestion_association.departements }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -43,5 +43,9 @@
                     <strong>no record found</strong>
                 </div>
             {% endfor %}
+            {# display navigation #}
+            <div class="navigation row flex lg-12">
+                {{ knp_pagination_render(gestion_associations) }}
+            </div>
         </div>
     </div>
