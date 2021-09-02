@@ -104,6 +104,7 @@ class GestionAssociationCrudController extends AbstractCrudController
         return $crud
             //->setDefaultSort(['date_signature' => "ASC"])
             ->setDefaultSort(['id' => "DESC"])
+            ->setPaginatorPageSize(7)
         ;
     }
 
