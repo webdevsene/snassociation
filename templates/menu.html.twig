@@ -1,7 +1,7 @@
 <!--<div class="container">-->
-		<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-primary" style="height: 68px; margin-top: 60px;">
+		<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-primary" style="height: 68px; margin-top: 89px;">
 			<div class="page-header navbar fixed-top">
-			    <img src="{{asset('../bootstrap/img/logo-interieur2.jpg')}}" class="img-fluid page-header" alt="Responsive image">
+			    {# <img src="{{asset('../bootstrap/img/logo-interieur2.jpg')}}" class="img-fluid page-header" alt="Responsive image"> #}
 			</div>
 			<div class="container-fluid">
 				<a class="navbar-brand" href="{{ path('home') }}">Accueil</a>
@@ -41,15 +41,13 @@
 
 {% block stylesheets %}
 <style>
-.page-header img {
-  margin-top: 0px;
-}
+
 .page-header {
-  height: 60px;
+  height: 98px;
   margin-top: 0px;
   background-size: cover;
   width: 100%;
-  /*background-image: url(some/parth/to/image);*/
+  background-image: url("{{ asset('../bootstrap/img/logo-interieur2.jpg') }}");
 }
 </style>
     {{ encore_entry_link_tags('app') }}

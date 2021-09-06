@@ -6,28 +6,24 @@
         <div class="row" data-masonry='{"percentPosition": true }'>
             {% for gestion_association in gestion_associations %}
                     <div class="col-md-3">
-                        <div class="card my-2 bg-secondary">
+                        <div class="card my-2 bg-light">
                             <div class="col form-group d-flex">
                                 <span class="badge badge-primary bg-success" >Récipissé N° : {{ gestion_association.numeroRecipice }}</span>
                                 <span class="input-group-addon text-small ps-5">{{ gestion_association.dateSignature ? gestion_association.dateSignature|date('Y-m-d') : '' }}</span>
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">{{ gestion_association.denomination|u.truncate(25, "...", true) }}</h5>
-                                <p class="card-text">onit365</p>
-                                <div class="row">
-                                    <div class="col-xs-1-12">
-                                        <div class="input-group bg-light">
-                                            <span class="input-group-addon">Région : {{ gestion_association.regions }}</span>
-                                            <span class="input-group-addon ps-5">Dept : {{ gestion_association.departements }}</span>
-                                        </div>
-                                    </div>
+                                <p class="card-text">Région <span class="text-muted"> : {{ gestion_association.regions }}</span></p>
+                                <div class="">
+                                    {# <span class="">Région : {{ gestion_association.regions }}</span> #}
+                                    <p class="card-text">Département<span class="text-muted"> : {{ gestion_association.departements }}</span></p>
                                 </div>
                                 <hr>
-                                <div class="col inline-group d-flex">
+                                <div class="inline-group d-flex">
                                     {#<a class="btn btn-outline-primary" href="{{ path('gestion_association_show', {'id': gestion_association.id}) }}" style="margin-right: 2rem;">Détails...</a>#}
-                                    <a class="btn btn-outline-primary" href="{{ path('gestion_association_show', {'slug': gestion_association.slug, 'id': gestion_association.id}) }}" style="margin-right: 2rem;">Détails...</a>
-                                    <button class="btn">
-                                             <span class="badge badge-primary bg-info"> {{ gestion_association.adresseSiege|u.truncate(20, '...', true) }} </span>
+                                    <a class="btn btn-outline-primary" href="{{ path('gestion_association_show', {'slug': gestion_association.slug, 'id': gestion_association.id}) }}">Détails...</a>
+                                    <button class="btn ms-2">
+                                             <span class="badge badge-primary bg-info fw-light text-muted"> {{ gestion_association.adresseSiege|u.truncate(22, '...', true) }} </span>
                                     </button>
                                 </div>
                             </div>
