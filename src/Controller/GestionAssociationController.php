@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\GestionAssociationRepository;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -22,7 +24,7 @@ class GestionAssociationController extends AbstractController
      */
     public function index(GestionAssociationRepository $gestionAssociationRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $donnees = $gestionAssociationRepository->findBy([], ['createdAt' => 'desc']);
+        $donnees = $gestionAssociationRepository->findBy([], ['id' => 'DESC']);
 
         // $gestion_association = $gestionAssociationRepository->findAll();
 
@@ -46,7 +48,8 @@ class GestionAssociationController extends AbstractController
 
         return $this->render('gestion_association/index.html.twig', [
             'gestion_associations' => $gestion_association,
-            'form' => $form->createview()
+            'form' => $form->createview(),
+            'count_all_assoc' => $gestionAssociationRepository->countAllAssoc()
         ]);
     }
 
@@ -115,5 +118,16 @@ class GestionAssociationController extends AbstractController
         }
 
         return $this->redirectToRoute('gestion_association_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * Method pour telecharger un fichier
+     * @Route("/download", name="download_file")
+     */
+    public function downloadFileAction()
+    {
+        $response = new BinaryFileResponse('path/to/pdf.pdf');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT,'pdf.pdf');
+        return $response;
     }
 }

@@ -61,7 +61,8 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/home, roles: ROLE_USER }
+        # - { path: ^/home, roles: ROLE_USER }
+        - { path: ^/home, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/(.*)/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/(.*)/association, roles: ROLE_USER }
         # change '/admin' by the URL used by your Dashboard

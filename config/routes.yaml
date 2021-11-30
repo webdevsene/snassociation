@@ -1,6 +1,9 @@
-app_login :
+index :
     path: /
-    controller: App\Controller\SecurityController::login
+    controller: App\Controller\HomeController::index
+# app_login :
+#     path: /
+#     controller: App\Controller\SecurityController::login
 # homepage:
 #     path: /{_locale}
 #     controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction

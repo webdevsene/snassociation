@@ -35,7 +35,21 @@ class GestionAssociationRepository extends ServiceEntityRepository
                 ->setParameter('id', $type);
         }
 
-        return $query->getQuery()->getResult();
+        return $query->orderBy('g.id', 'DESC')->getQuery()->getResult();
+    }
+
+    /**
+     * @return int|mixed|string|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     *
+     *
+     */
+    public function countAllAssoc()
+    {
+        return $this->createQueryBuilder('ga')
+                    ->select('COUNT(ga.id)')
+                    ->getQuery()
+                    ->getSingleScalarResult();
     }
 
     // /**

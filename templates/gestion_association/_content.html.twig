@@ -5,26 +5,37 @@
     <div class="container">
         <div class="row" data-masonry='{"percentPosition": true }'>
             {% for gestion_association in gestion_associations %}
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card my-2 bg-light">
-                            <div class="col form-group d-flex">
+                            <div class="d-flex justify-content-between">
                                 <span class="badge badge-primary bg-success" >Récipissé N° : {{ gestion_association.numeroRecipice }}</span>
-                                <span class="input-group-addon text-small ps-5">{{ gestion_association.dateSignature ? gestion_association.dateSignature|date('Y-m-d') : '' }}</span>
+                                {# <span class="input-group-addon text-small ps-5">{{ gestion_association.dateSignature ? gestion_association.dateSignature|date('Y-m-d') : '' }}</span> #}
+                                <span class="input-group-addon text-small ps-5 badge bg-danger">{{ gestion_association.dateSignature ? gestion_association.dateSignature|date('Y') : '' }}</span>
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">{{ gestion_association.denomination|u.truncate(25, "...", true) }}</h5>
-                                <p class="card-text">Région <span class="text-muted"> : {{ gestion_association.regions }}</span></p>
-                                <div class="">
-                                    {# <span class="">Région : {{ gestion_association.regions }}</span> #}
-                                    <p class="card-text">Département<span class="text-muted"> : {{ gestion_association.departements }}</span></p>
-                                </div>
+                                {# <h5 class="card-title">{{ gestion_association.denomination|u.truncate(25, "...", true) }}</h5> #}
+                                <h6 class="card-title">
+                                    <a href="{{ path('gestion_association_show', {'slug': gestion_association.slug, 'id': gestion_association.id}) }}">
+                                        {{ gestion_association.denomination|u.truncate(40, "...", true) }}
+                                    </a>
+                                </h6>
                                 <hr>
-                                <div class="inline-group d-flex">
-                                    {#<a class="btn btn-outline-primary" href="{{ path('gestion_association_show', {'id': gestion_association.id}) }}" style="margin-right: 2rem;">Détails...</a>#}
+                                <div class="mt-1 text-left">
+                                    Région :<span class="card-text fw-light text-muted"> <span class="text-muted"> {{ gestion_association.regions }}</span></span>
+                                    {# <span class="">Région : {{ gestion_association.regions }}</span> #} -
+                                    Département: <span class="card-text fw-light text-muted"><span class="text-muted">{{ gestion_association.departements }}</span></span>
+                                </div>
+                                Adresse : <span class="badge badge-primary fw-light text-muted ps-2 word-wrap"> {{ gestion_association.adresseSiege|u.truncate(35, '...', true) }} </span>
+                                <hr>
+                                <div class="d-flex justify-content-between">
+                                {# 
                                     <a class="btn btn-outline-primary" href="{{ path('gestion_association_show', {'slug': gestion_association.slug, 'id': gestion_association.id}) }}">Détails...</a>
-                                    <button class="btn ms-2">
-                                             <span class="badge badge-primary bg-info fw-light text-muted"> {{ gestion_association.adresseSiege|u.truncate(22, '...', true) }} </span>
+                                    <button class="btn ms-1">
+                                             <span class="badge badge-primary bg-info fw-light text-muted ps-2"> {{ gestion_association.adresseSiege|u.truncate(22, '...', true) }} </span>
                                     </button>
+                                #}
+                                    <span class="fw-light text-muted text-small"> Document PDF</span>
+                                    <span class="year"> <i class="fa-file-pdf-o" aria-hidden="true"></i></span>
                                 </div>
                             </div>
                         </div>
